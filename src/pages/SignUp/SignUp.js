@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 
 import { Container, StencilLogo, FormContainer, UserForm, Input, WideButton } from '../../components/SignUser/SignUser_styles.js';
 
-export default function SignIn() {
+export default function SignUp() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log('clicked "Entrar"');
+    console.log('clicked "Cadastrar"');
   }
 
   return (
@@ -16,15 +16,21 @@ export default function SignIn() {
         <StencilLogo>MyWallet</StencilLogo>
         <UserForm onSubmit={handleSubmit}>
           <Input required
+            type='text'
+            placeholder='Nome' />
+          <Input required
             type='email'
             placeholder='E-mail' />
           <Input required
             type='password'
             placeholder='Senha' />
+          <Input required
+            type='password'
+            placeholder='Confirme a senha' />
           <WideButton type='submit'>
-            Entrar
+            Cadastrar
           </WideButton>
-          <Link to='/sign-up'>Primeira vez? Cadastre-se!</Link>
+          <Link to='/'>Já tem uma conta? Entre agora!</Link>
         </UserForm>
       </FormContainer>
     </Container>
