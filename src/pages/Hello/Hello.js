@@ -1,21 +1,61 @@
 import React from 'react';
 
+import Registry from './Registry.js';
+
 import { Container } from '../../components/SignUser/SignUser_styles.js'
 import { Header, FinanceRecord, NewTransactions, NewEntryButton } from '../../components/Hello/Hello_styles.js';
 import { RiLogoutBoxRLine } from 'react-icons/ri';
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai';
+
+
+//const transactionsArray = [];
+const transactionsArray = [
+  {
+    date: "30/11",
+    description: "Almoço mãe",
+    amount: 39.90,
+    type: "expense"
+  },
+  {
+    date: "27/11",
+    description: "Mercado",
+    amount: 542.54,
+    type: "expense"
+  },
+  {
+    date: "26/11",
+    description: "Compras churrasco",
+    amount: 67.60,
+    type: "expense"
+  },
+  {
+    date: "20/11",
+    description: "Empréstimo Maria",
+    amount: 500.00,
+    type: "revenue"
+  },
+  {
+    date: "15/11",
+    description: "Salário",
+    amount: 3000.00
+  },
+];
 
 export default function Hello() {
 
   return (
     <Container>
       <Header>
-        <h1>Olá, _USERNAME_</h1>
+        <h1>Olá, _username_</h1>
         < RiLogoutBoxRLine />
       </Header>
 
       <FinanceRecord>
-        <li>Não há registros de entrada ou saída</li>
+        {transactionsArray.length === 0 ? 
+          <li>Não há registros de entrada ou saída</li>
+          :
+          transactionsArray.map(transaction => <Registry>{transaction}</Registry>)
+        }
       </FinanceRecord>
 
       <NewTransactions>

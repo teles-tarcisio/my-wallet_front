@@ -34,6 +34,9 @@ border-radius: 5px;
   }
 `;
 
+const Transaction = styled.li`
+`;
+
 const NewTransactions = styled.div`
   width: 100%;
   margin: 13px 9px 0 9px;
@@ -63,4 +66,4 @@ const NewEntryButton = styled.div`
 `;
 
 
-export { Header, FinanceRecord, NewTransactions, NewEntryButton };
+export { Header, FinanceRecord, NewTransactions, NewEntryButton, Transaction };
