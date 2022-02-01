@@ -15,7 +15,7 @@ export default function Hello() {
       </Header>
 
       <FinanceRecord>
-        <h1>Não há registros de entrada ou saída</h1>
+        <li>Não há registros de entrada ou saída</li>
       </FinanceRecord>
 
       <NewTransactions>

@@ -24,6 +24,14 @@ align-items: center;
 justify-content: center;
 background-color: #FFFFFF;
 border-radius: 5px;
+& li {
+    width: 180px;
+    text-align: center;
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 400;
+    color: #868686;
+  }
 `;
 
 const NewTransactions = styled.div`
