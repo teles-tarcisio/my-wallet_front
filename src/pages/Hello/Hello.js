@@ -3,7 +3,7 @@ import React from 'react';
 import Registry from './Registry.js';
 
 import { Container } from '../../components/SignUser/SignUser_styles.js'
-import { Header, FinanceRecord, NewTransactions, NewEntryButton } from '../../components/Hello/Hello_styles.js';
+import { Header, FinanceRecord, Balance, NewTransactions, NewEntryButton } from '../../components/Hello/Hello_styles.js';
 import { RiLogoutBoxRLine } from 'react-icons/ri';
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai';
 
@@ -56,6 +56,12 @@ export default function Hello() {
           :
           transactionsArray.map(transaction => <Registry>{transaction}</Registry>)
         }
+        
+        <Balance>
+          <p1>SALDO</p1>
+          <p2>2849.96</p2>
+        </Balance>
+        
       </FinanceRecord>
 
       <NewTransactions>
