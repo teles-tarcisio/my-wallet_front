@@ -16,9 +16,10 @@ color: #FFFFFF;
 const FinanceRecord = styled.ul`
 width: 100%;
 height: 100%;
-margin: auto 9px;
+margin: 0 9px;
 padding: 23px 10px 10px 10px;
 display: flex;
+gap: 15px 0;
 flex-direction: column;
 align-items: center;
 justify-content: center;
@@ -35,6 +36,22 @@ border-radius: 5px;
 `;
 
 const Transaction = styled.li`
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0 12px;
+  font-size: 16px;
+  line-height: 19px;
+  & p1 {
+    color: #C6C6C6;
+  }
+  & p2 {
+    color: #000000;
+  }
+  & p3 {
+    color: ${props => props.type === 'expense' ? '#C70000' : '#03AC00'};
+  }
 `;
 
 const NewTransactions = styled.div`
