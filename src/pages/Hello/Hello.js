@@ -45,7 +45,7 @@ const transactionsArray = [
 ];
 
 export default function Hello() {
-  const { signedUser } = useContext(userAuthContext);
+  const { signedUser, setSignedUser } = useContext(userAuthContext);
   const navigate = useNavigate();
 
   console.log(signedUser);
@@ -54,6 +54,7 @@ export default function Hello() {
     console.log('antes :', localStorage.getItem('authentication'));
     window.localStorage.clear();
     console.log(localStorage.getItem('authentication'));
+    setSignedUser({});
     navigate('/');
   }
 
