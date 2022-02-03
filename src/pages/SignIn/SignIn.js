@@ -9,7 +9,7 @@ import { Container, StencilLogo, FormContainer, UserForm, Input, WideButton } fr
 //-----
 function simulateAxios(value) {
   return new Promise(resolve =>
-    setTimeout(() => resolve(value), 5000)
+    setTimeout(() => resolve({...value, token: 'received-token'}), 5000)
   );
 }
 
@@ -19,18 +19,19 @@ export default function SignIn() {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [isLoading, setIsLoading] = useState(false);
   const { signedUser, setSignedUser } = useContext(userAuthContext);
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log('chamou useEffect!');
-    if (signedUser) {
+    if (signedUser && signedUser.token) {
       console.log('recebeu token? ', signedUser);
+      console.log('success! navigate');
     }
-  }, []);
+  });
 
   function customLogin(authData) {
-    setSignedUser(authData +'_token');
-    localStorage.setItem("loginToken", JSON.stringify(authData+'_token'));
+    setSignedUser(authData);
+    localStorage.setItem("authentication", JSON.stringify(authData));
   }
 
   function handleFormChange(ev) {
@@ -38,16 +39,14 @@ export default function SignIn() {
   }
 
   function handleSubmit(ev) {
-    ev.preventDefault(); //ok
+    ev.preventDefault();
     
-    setIsLoading(true); //ok
-    const loginPromise = simulateAxios(formData.email); //ok
-    loginPromise.then(response => { //ok
-      setIsLoading(false);  //ok
+    setIsLoading(true);
+    const loginPromise = simulateAxios(formData);
+    loginPromise.then(response => {
+      setIsLoading(false);
       
       customLogin(response);
-
-      console.log('success! navigate');
     });
     loginPromise.catch(() => {
       setIsLoading(false);

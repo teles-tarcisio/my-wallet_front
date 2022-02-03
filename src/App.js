@@ -7,7 +7,7 @@ import { SignIn, SignUp, Hello, NewTransaction } from './pages';
 
 
 export default function App() {
-  const persistentLogin = JSON.parse(localStorage.getItem("loginToken"));
+  const persistentLogin = JSON.parse(localStorage.getItem("authentication"));
   const [signedUser, setSignedUser] = useState(persistentLogin);
 
   return (
