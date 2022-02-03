@@ -6,15 +6,12 @@ import { Bars } from 'react-loader-spinner';
 
 import { Container, StencilLogo, FormContainer, UserForm, Input, WideButton } from '../../components/SignUser/SignUser_styles.js';
 
-//-----
-function simulateAxios(value) {
-  return new Promise(resolve =>
-    setTimeout(() => resolve({...value, token: 'received-token'}), 5000)
-  );
-}
 
-//-----
-
+//
+///////
+import simulateAxios from '../../services/api.js';
+///////
+//
 export default function SignIn() {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [isLoading, setIsLoading] = useState(false);
@@ -22,10 +19,10 @@ export default function SignIn() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log('chamou useEffect!');
     if (signedUser && signedUser.token) {
       console.log('recebeu token? ', signedUser);
       console.log('success! navigate');
+      navigate('/hello');
     }
   });
 
@@ -45,14 +42,12 @@ export default function SignIn() {
     const loginPromise = simulateAxios(formData);
     loginPromise.then(response => {
       setIsLoading(false);
-      
       customLogin(response);
     });
     loginPromise.catch(() => {
       setIsLoading(false);
       alert('Erro de login');
     });
-
   }
 
   return (

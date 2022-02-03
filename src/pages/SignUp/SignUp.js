@@ -1,28 +1,47 @@
-import React, { useState} from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
+import { Bars } from 'react-loader-spinner';
 
 import { Container, StencilLogo, FormContainer, UserForm, Input, WideButton } from '../../components/SignUser/SignUser_styles.js';
 
+
+//
+///////
+import simulateAxios from '../../services/api.js';
+///////
+//
 export default function SignUp() {
   const [formData, setFormData] = useState({ name: '', email: '', password: '', passwordConfirmation: ''});
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
-  function handleSubmit(event) {
-    event.preventDefault();
+  function handleSubmit(ev) {
+    ev.preventDefault();
     if (formData.passwordConfirmation !== formData.password) {
-      alert('senhas não conferem');
+      alert('As senhas não conferem, tente novamente');
+      return;
     }
-    else {
-      alert(`send formData (${formData.name}, ${formData.email}, ${formData.password})`);
-    }
+    setIsLoading(true);
+    const signUpPromise = simulateAxios(formData);
+    signUpPromise.then(res => {
+      setIsLoading(false);
+      alert('Cadastro efetuado com sucesso, por favor faça login.');
+      navigate('/');
+    });
+    signUpPromise.catch(() => {
+      setIsLoading(false);
+      alert('Erro de cadastro');
+    });
   }
 
-  function handleFormChange(event) {
-    setFormData({ ...formData, [event.target.name]: event.target.value });
+  function handleFormChange(ev) {
+    setFormData({ ...formData, [ev.target.name]: ev.target.value });
   }
 
   return (
     <Container>
-      {console.log(formData)}
+      {console.log(' --> ', formData)}
       <FormContainer>
         <StencilLogo>MyWallet</StencilLogo>
         <UserForm onSubmit={handleSubmit}>
@@ -32,6 +51,7 @@ export default function SignUp() {
             name='name'
             value={formData.name}
             onChange={handleFormChange}
+            disabled={isLoading}
           />
           <Input required
             type='email'
@@ -39,6 +59,7 @@ export default function SignUp() {
             name='email'
             value={formData.email}
             onChange={handleFormChange}
+            disabled={isLoading}
           />
           <Input required
             type='password'
@@ -46,6 +67,7 @@ export default function SignUp() {
             name='password'
             value={formData.password}
             onChange={handleFormChange}
+            disabled={isLoading}
           />
           <Input required
             type='password'
@@ -53,9 +75,15 @@ export default function SignUp() {
             name='passwordConfirmation'
             value={formData.passwordConfirmation}
             onChange={handleFormChange}
+            disabled={isLoading}
           />
-          <WideButton type='submit'>
-            Cadastrar
+          <WideButton type='submit' disabled={isLoading}>
+            {
+              isLoading ?
+              <Bars color="#FFFFFF" height={45} />
+              :
+              'Cadastrar'
+            }
           </WideButton>
           <Link to='/'>Já tem uma conta? Entre agora!</Link>
         </UserForm>
