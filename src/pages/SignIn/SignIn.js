@@ -1,38 +1,59 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { userAuthContext } from '../../contexts/userAuthContext.js';
+
+import { Bars } from 'react-loader-spinner';
 
 import { Container, StencilLogo, FormContainer, UserForm, Input, WideButton } from '../../components/SignUser/SignUser_styles.js';
 
-
+//-----
 function simulateAxios(value) {
-  return new Promise( resolve =>
-    setTimeout(() => {
-      console.log('\t\tpassou delay timeout');
-      resolve(value);
-    }, 4500)
+  return new Promise(resolve =>
+    setTimeout(() => resolve(value), 5000)
   );
 }
 
-export default function SignIn() {
-  const [formData, setFormData] = useState({ email:'', password:'' });
-  
-  /*
-  const [stillLoading, SetStillLoading] = useState(false);
-  const navigate = useNavigate();
-  */
-  
-  
+//-----
 
-  function handleFormChange(event) {
-    setFormData({ ...formData, [event.target.name]: event.target.value });
+export default function SignIn() {
+  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [isLoading, setIsLoading] = useState(false);
+  const { signedUser, setSignedUser } = useContext(userAuthContext);
+  //const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log('chamou useEffect!');
+    if (signedUser) {
+      console.log('recebeu token? ', signedUser);
+    }
+  }, []);
+
+  function customLogin(authData) {
+    setSignedUser(authData +'_token');
+    localStorage.setItem("loginToken", JSON.stringify(authData+'_token'));
   }
 
-  async function handleSubmit(event) {
-    event.preventDefault();
-    console.log('clicked submit ');
-    const resposta = simulateAxios('simulatedAxios');
-    console.log('\tcontinuando após chamar simulatedAxios');
-    resposta.then(res => console.log('\t\t\tresposta com atraso: ', res));
+  function handleFormChange(ev) {
+    setFormData({ ...formData, [ev.target.name]: ev.target.value });
+  }
+
+  function handleSubmit(ev) {
+    ev.preventDefault(); //ok
+    
+    setIsLoading(true); //ok
+    const loginPromise = simulateAxios(formData.email); //ok
+    loginPromise.then(response => { //ok
+      setIsLoading(false);  //ok
+      
+      customLogin(response);
+
+      console.log('success! navigate');
+    });
+    loginPromise.catch(() => {
+      setIsLoading(false);
+      alert('Erro de login');
+    });
+
   }
 
   return (
@@ -46,6 +67,7 @@ export default function SignIn() {
             name='email'
             value={formData.email}
             onChange={handleFormChange}
+            disabled={isLoading}
           />
           <Input required
             type='password'
@@ -53,9 +75,15 @@ export default function SignIn() {
             name='password'
             value={formData.password}
             onChange={handleFormChange}
+            disabled={isLoading}
           />
-          <WideButton type='submit'>
-            Entrar
+          <WideButton type='submit' disabled={isLoading} >
+            {
+              isLoading ?
+                <Bars color="#FFFFFF" height={45} />
+                :
+                'Entrar'
+            }
           </WideButton>
           <Link to='/sign-up'>Primeira vez? Cadastre-se!</Link>
         </UserForm>

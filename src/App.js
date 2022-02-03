@@ -1,29 +1,35 @@
+import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import React from 'react';
+
+import { userAuthContext } from './contexts/userAuthContext.js';
 
 import { SignIn, SignUp, Hello, NewTransaction } from './pages';
 
 
 export default function App() {
+  const persistentLogin = JSON.parse(localStorage.getItem("loginToken"));
+  const [signedUser, setSignedUser] = useState(persistentLogin);
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path='/' element={ <SignIn /> } />
+      <userAuthContext.Provider value={{ signedUser, setSignedUser }} >
+        <Routes>
+          <Route path='/' element={<SignIn />} />
 
-        <Route path='/sign-up'
-          element={ <SignUp /> }
-        />
+          <Route path='/sign-up'
+            element={<SignUp />}
+          />
 
-        <Route path='/hello'
-          element={ <Hello /> }
-        />
+          <Route path='/hello'
+            element={<Hello />}
+          />
 
-        <Route path='/new-transaction'
-          element={ <NewTransaction /> }
-        />
+          <Route path='/new-transaction'
+            element={<NewTransaction />}
+          />
 
-      </Routes>    
+        </Routes>
+      </userAuthContext.Provider>
     </BrowserRouter>
   );
 }

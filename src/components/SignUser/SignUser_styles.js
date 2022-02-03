@@ -54,6 +54,7 @@ const Input = styled.input`
   border: none;
   background-color: #FFFFFF;
   padding: 17px 15px;
+  opacity: ${props => props.disabled ? 0.63 : 1.0};
   font-family: 'Raleway', sans-serif;
   font-size: 20px;
   line-height: 23px;
@@ -63,6 +64,9 @@ const Input = styled.input`
 const WideButton = styled.button`
   width: 100%;
   height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: 0 auto 36px auto;
   background-color: #A328D6;
   border-radius: 5px;
