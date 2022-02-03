@@ -3,31 +3,40 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { Container, StencilLogo, FormContainer, UserForm, Input, WideButton } from '../../components/SignUser/SignUser_styles.js';
 
+
+function simulateAxios(value) {
+  return new Promise( resolve =>
+    setTimeout(() => {
+      console.log('\t\tpassou delay timeout');
+      resolve(value);
+    }, 4500)
+  );
+}
+
 export default function SignIn() {
   const [formData, setFormData] = useState({ email:'', password:'' });
   
   /*
   const [stillLoading, SetStillLoading] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    
-  })
   */
+  
+  
 
   function handleFormChange(event) {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-    alert(`send formData (${formData.email}, ${formData.password})`);
-    //navigate();
+    console.log('clicked submit ');
+    const resposta = simulateAxios('simulatedAxios');
+    console.log('\tcontinuando após chamar simulatedAxios');
+    resposta.then(res => console.log('\t\t\tresposta com atraso: ', res));
   }
 
   return (
     <Container>
-      {console.log(formData)}
       <FormContainer>
         <StencilLogo>MyWallet</StencilLogo>
         <UserForm onSubmit={handleSubmit}>
