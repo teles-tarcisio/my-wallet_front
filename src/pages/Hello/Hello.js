@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Registry from './Registry.js';
 
@@ -6,6 +7,8 @@ import { Container } from '../../components/SignUser/SignUser_styles.js'
 import { Header, FinanceRecord, Balance, NewTransactions, NewEntryButton } from '../../components/Hello/Hello_styles.js';
 import { RiLogoutBoxRLine } from 'react-icons/ri';
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai';
+import { useContext } from 'react/cjs/react.development';
+import { userAuthContext } from '../../contexts/userAuthContext.js';
 
 
 //const transactionsArray = [];
@@ -42,12 +45,23 @@ const transactionsArray = [
 ];
 
 export default function Hello() {
+  const { signedUser } = useContext(userAuthContext);
+  const navigate = useNavigate();
+
+  console.log(signedUser);
+
+  function logout() {
+    console.log('antes :', localStorage.getItem('authentication'));
+    window.localStorage.clear();
+    console.log(localStorage.getItem('authentication'));
+    navigate('/');
+  }
 
   return (
     <Container>
       <Header>
         <h1>Olá, _username_</h1>
-        < RiLogoutBoxRLine />
+        < RiLogoutBoxRLine onClick={logout}/>
       </Header>
 
       <FinanceRecord>
