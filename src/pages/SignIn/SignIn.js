@@ -1,17 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { userAuthContext } from '../../contexts/userAuthContext.js';
+import { userSignIn } from '../../services/api.js';
 
 import { Bars } from 'react-loader-spinner';
 
 import { Container, StencilLogo, FormContainer, UserForm, Input, WideButton } from '../../components/SignUser/SignUser_styles.js';
 
 
-//
-///////
-import { simulateAxios } from '../../services/api.js';
-///////
-//
 export default function SignIn() {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [isLoading, setIsLoading] = useState(false);
@@ -24,10 +20,10 @@ export default function SignIn() {
       console.log('success! navigate');
       navigate('/hello');
     }
-  });
+  }, []);
 
   function customLogin(authData) {
-    setSignedUser(authData);
+    setSignedUser({...signedUser, token: authData});
     localStorage.setItem("authentication", JSON.stringify(authData));
   }
 
@@ -39,19 +35,23 @@ export default function SignIn() {
     ev.preventDefault();
     
     setIsLoading(true);
-    const loginPromise = simulateAxios(formData);
+    const loginPromise = userSignIn(formData);
     loginPromise.then(response => {
+      console.log('token devolvido: ', response.data);
       setIsLoading(false);
-      customLogin(response);
+      // ?
+      console.log('signedUser', signedUser);
+      //
     });
-    loginPromise.catch(() => {
+    loginPromise.catch((error) => {
       setIsLoading(false);
-      alert('Erro de login');
+      alert(error.response.data);
     });
   }
 
   return (
     <Container>
+      {console.log(signedUser)}
       <FormContainer>
         <StencilLogo>MyWallet</StencilLogo>
         <UserForm onSubmit={handleSubmit}>
