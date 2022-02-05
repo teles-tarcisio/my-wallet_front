@@ -8,6 +8,10 @@ export function userSignUp(newUserData) {
   return newUserPromise;
 }
 
+export function userSignIn(userData) {
+  const loginPromise = axios.post(SERVER_BASE_URL + '/sign-in', userData);
+  return loginPromise;
+}
 
 export function simulateAxios(value) {
   return new Promise(resolve =>

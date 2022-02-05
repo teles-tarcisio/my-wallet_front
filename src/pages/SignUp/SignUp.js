@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { userSignUp } from '../../services/api.js';
 
 import { Bars } from 'react-loader-spinner';
 
 import { Container, StencilLogo, FormContainer, UserForm, Input, WideButton } from '../../components/SignUser/SignUser_styles.js';
 
 
-//
-///////
-import { userSignUp } from '../../services/api.js';
-///////
-//
 export default function SignUp() {
   const [formData, setFormData] = useState({ name: '', email: '', password: '', passwordConfirmation: ''});
   const [isLoading, setIsLoading] = useState(false);
@@ -26,10 +22,8 @@ export default function SignUp() {
     delete formData.passwordConfirmation;
     const signUpPromise = userSignUp(formData);
     signUpPromise.then(res => {
-      console.log('axios devolveu: ', res);
       setIsLoading(false);
       alert('Cadastro efetuado com sucesso, por favor faça login.');
-      console.log('axios devolveu: ', res);
       navigate('/');
     });
     signUpPromise.catch((error) => {
