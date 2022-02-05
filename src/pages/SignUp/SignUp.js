@@ -8,7 +8,7 @@ import { Container, StencilLogo, FormContainer, UserForm, Input, WideButton } fr
 
 //
 ///////
-import simulateAxios from '../../services/api.js';
+import { userSignUp } from '../../services/api.js';
 ///////
 //
 export default function SignUp() {
@@ -23,15 +23,18 @@ export default function SignUp() {
       return;
     }
     setIsLoading(true);
-    const signUpPromise = simulateAxios(formData);
+    delete formData.passwordConfirmation;
+    const signUpPromise = userSignUp(formData);
     signUpPromise.then(res => {
+      console.log('axios devolveu: ', res);
       setIsLoading(false);
       alert('Cadastro efetuado com sucesso, por favor faça login.');
+      console.log('axios devolveu: ', res);
       navigate('/');
     });
-    signUpPromise.catch(() => {
+    signUpPromise.catch((error) => {
       setIsLoading(false);
-      alert('Erro de cadastro');
+      alert(error.response.data);
     });
   }
 
@@ -41,7 +44,6 @@ export default function SignUp() {
 
   return (
     <Container>
-      {console.log(' --> ', formData)}
       <FormContainer>
         <StencilLogo>MyWallet</StencilLogo>
         <UserForm onSubmit={handleSubmit}>

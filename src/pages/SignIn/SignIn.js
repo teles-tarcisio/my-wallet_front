@@ -9,7 +9,7 @@ import { Container, StencilLogo, FormContainer, UserForm, Input, WideButton } fr
 
 //
 ///////
-import simulateAxios from '../../services/api.js';
+import { simulateAxios } from '../../services/api.js';
 ///////
 //
 export default function SignIn() {
