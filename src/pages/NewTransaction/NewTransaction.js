@@ -4,11 +4,18 @@ import { Container, Input, WideButton } from '../../components/SignUser/SignUser
 import { Header } from '../../components/Hello/Hello_styles';
 import { TransactionContainer, TransactionForm } from '../../components/NewTransaction/NewTransaction_styles.js';
 
-export default function NewTransaction() {
+export default function NewTransaction({ type }) {
+
+  
+
+
+
   return (
     <Container>
+      {console.log('type: ', type)};
       <Header>
-        <h1>Nova _entrada_</h1>
+        <h1>Nova {type === 'expense' ? 'saída' : 'entrada'}
+        </h1>
       </Header>
       <TransactionContainer>
         <TransactionForm>
@@ -20,7 +27,7 @@ export default function NewTransaction() {
             placeholder='Descrição' />
 
           <WideButton type='submit'>
-            Salvar _entrada_
+            Salvar {type === 'expense' ? 'saída' : 'entrada'}
           </WideButton>
         </TransactionForm>
       </TransactionContainer>

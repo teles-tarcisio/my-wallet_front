@@ -24,9 +24,13 @@ export default function App() {
             element={<Hello />}
           />
 
-          <Route path='/new-transaction'
-            element={<NewTransaction />}
+          <Route path='/new-expense'
+            element={<NewTransaction type={'expense'}/>}
           />
+          <Route path='/new-revenue'
+            element={<NewTransaction type={'revenue'}/>}
+          />
+
 
         </Routes>
       </userAuthContext.Provider>

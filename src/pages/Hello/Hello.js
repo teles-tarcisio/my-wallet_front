@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { getUserTransactions } from '../../services/api.js';
 import Registry from './Registry.js';
 
@@ -45,6 +45,7 @@ const hardcodedTransactions = [
 
 export default function Hello() {
   const [transactionsArray, setTransactionsArray] = useState(hardcodedTransactions);
+  const [transactionType, setTransaction] = useState('');
   const { signedUser, setSignedUser } = useContext(userAuthContext);
   const navigate = useNavigate();
 
@@ -61,11 +62,10 @@ export default function Hello() {
   }
 
   function newTransaction(type) {
-    console.log('newTransaction: ', type);
-    alert('navigate(...)');
+    navigate('/transaction');
   }
 
-  useEffect( loadTransactions, []);
+  useEffect(loadTransactions, []);
 
 
   return (
@@ -81,7 +81,7 @@ export default function Hello() {
           <li>Não há registros de entrada ou saída</li>
           :
           <>
-          {transactionsArray.map(transaction => <Registry>{transaction}</Registry>)}
+            {transactionsArray.map(transaction => <Registry>{transaction}</Registry>)}
             <Balance>
               <p1>SALDO</p1>
               <p2>2849.96</p2>
@@ -91,15 +91,19 @@ export default function Hello() {
       </FinanceRecord>
 
       <NewTransactions>
-        <NewEntryButton onClick={() => {newTransaction('revenue')}}>
-          <AiOutlinePlusCircle />
-          <h1>Nova entrada</h1>
-        </NewEntryButton>
+        <Link to={'/new-revenue'}>
+          <NewEntryButton>
+            <AiOutlinePlusCircle />
+            <h1>Nova entrada</h1>
+          </NewEntryButton>
+        </Link>
 
-        <NewEntryButton onClick={() => {newTransaction('expense')}}>
-          <AiOutlineMinusCircle />
-          <h1>Nova saída</h1>
-        </NewEntryButton>
+        <Link to={'/new-expense'} >
+          <NewEntryButton>
+            <AiOutlineMinusCircle />
+            <h1>Nova saída</h1>
+          </NewEntryButton>
+        </Link>
       </NewTransactions>
     </Container>
   );
