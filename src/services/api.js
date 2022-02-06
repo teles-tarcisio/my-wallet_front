@@ -13,6 +13,11 @@ export function userSignIn(userData) {
   return loginPromise;
 }
 
+export function getUserTransactions(token) {
+  const transactionsPromise = axios.get(SERVER_BASE_URL + '/transactions');
+  return transactionsPromise;
+}
+
 export function simulateAxios(value) {
   return new Promise(resolve =>
     setTimeout(() => resolve({...value, token: 'received-token'}), 2500)

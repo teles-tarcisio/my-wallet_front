@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { getUserTransactions } from '../../services/api.js';
 import Registry from './Registry.js';
 
 import { Container } from '../../components/SignUser/SignUser_styles.js'
@@ -10,8 +10,7 @@ import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai';
 import { userAuthContext } from '../../contexts/userAuthContext.js';
 
 
-const transactionsArray = [];
-/* const transactionsArray = [
+const hardcodedTransactions = [
   {
     date: "30/11",
     description: "Almoço mãe",
@@ -39,12 +38,13 @@ const transactionsArray = [];
   {
     date: "15/11",
     description: "Salário",
-    amount: 3000.00
+    amount: 3000.00,
+    type: "revenue"
   },
 ];
-*/
 
 export default function Hello() {
+  const [transactionsArray, setTransactionsArray] = useState(hardcodedTransactions);
   const { signedUser, setSignedUser } = useContext(userAuthContext);
   const navigate = useNavigate();
 
@@ -54,6 +54,19 @@ export default function Hello() {
     setSignedUser({});
     navigate('/');
   }
+
+  function loadTransactions() {
+    const transactionsPromise = getUserTransactions(signedUser.token);
+    console.log('array:\n', transactionsPromise);
+  }
+
+  function newTransaction(type) {
+    console.log('newTransaction: ', type);
+    alert('navigate(...)');
+  }
+
+  useEffect( loadTransactions, []);
+
 
   return (
     <Container>
@@ -75,18 +88,15 @@ export default function Hello() {
             </Balance>
           </>
         }
-
-
-
       </FinanceRecord>
 
       <NewTransactions>
-        <NewEntryButton>
+        <NewEntryButton onClick={() => {newTransaction('revenue')}}>
           <AiOutlinePlusCircle />
           <h1>Nova entrada</h1>
         </NewEntryButton>
 
-        <NewEntryButton>
+        <NewEntryButton onClick={() => {newTransaction('expense')}}>
           <AiOutlineMinusCircle />
           <h1>Nova saída</h1>
         </NewEntryButton>
