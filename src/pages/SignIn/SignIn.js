@@ -35,6 +35,7 @@ export default function SignIn() {
     loginPromise.then(response => {
       setIsLoading(false);
       setSignedUser(response.data);
+      console.log('response:', response.data);
       localStorage.setItem("auth", JSON.stringify(response.data));
       navigate('/hello');
     });
@@ -46,7 +47,6 @@ export default function SignIn() {
 
   return (
     <Container>
-      {console.log('signedUser do rerender:\n', signedUser)}
       <FormContainer>
         <StencilLogo>MyWallet</StencilLogo>
         <UserForm onSubmit={handleSubmit}>
