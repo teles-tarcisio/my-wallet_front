@@ -16,17 +16,13 @@ export default function SignIn() {
 
   useEffect(() => {
     if (signedUser && signedUser.token) {
-      console.log('recebeu token? ', signedUser);
+      console.log('context token? ', signedUser);
       console.log('success! navigate');
       navigate('/hello');
     }
   }, []);
 
-  function customLogin(authData) {
-    setSignedUser({...signedUser, token: authData});
-    localStorage.setItem("authentication", JSON.stringify(authData));
-  }
-
+  
   function handleFormChange(ev) {
     setFormData({ ...formData, [ev.target.name]: ev.target.value });
   }
@@ -39,9 +35,9 @@ export default function SignIn() {
     loginPromise.then(response => {
       console.log('token devolvido: ', response.data);
       setIsLoading(false);
-      // ?
-      console.log('signedUser', signedUser);
-      //
+      setSignedUser({token: response.data});
+      localStorage.setItem("authentication", JSON.stringify(response.data));
+      
     });
     loginPromise.catch((error) => {
       setIsLoading(false);
@@ -51,7 +47,7 @@ export default function SignIn() {
 
   return (
     <Container>
-      {console.log(signedUser)}
+      {console.log('signedUser ->', signedUser)}
       <FormContainer>
         <StencilLogo>MyWallet</StencilLogo>
         <UserForm onSubmit={handleSubmit}>
