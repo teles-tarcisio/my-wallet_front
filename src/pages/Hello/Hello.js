@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Registry from './Registry.js';
@@ -7,12 +7,11 @@ import { Container } from '../../components/SignUser/SignUser_styles.js'
 import { Header, FinanceRecord, Balance, NewTransactions, NewEntryButton } from '../../components/Hello/Hello_styles.js';
 import { RiLogoutBoxRLine } from 'react-icons/ri';
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai';
-import { useContext } from 'react/cjs/react.development';
 import { userAuthContext } from '../../contexts/userAuthContext.js';
 
 
-//const transactionsArray = [];
-const transactionsArray = [
+const transactionsArray = [];
+/* const transactionsArray = [
   {
     date: "30/11",
     description: "Almoço mãe",
@@ -43,40 +42,42 @@ const transactionsArray = [
     amount: 3000.00
   },
 ];
+*/
 
 export default function Hello() {
   const { signedUser, setSignedUser } = useContext(userAuthContext);
   const navigate = useNavigate();
 
-  console.log(signedUser);
-
   function logout() {
-    console.log('antes :', localStorage.getItem('authentication'));
-    window.localStorage.clear();
-    console.log(localStorage.getItem('authentication'));
+    localStorage.clear();
+    console.log('localStorage logout:', localStorage.getItem('authentication'));
     setSignedUser({});
     navigate('/');
   }
 
   return (
     <Container>
+      {console.log('context rerender:', signedUser)}
       <Header>
-        <h1>Olá, _username_</h1>
-        < RiLogoutBoxRLine onClick={logout}/>
+        <h1>Olá, {signedUser.name}</h1>
+        < RiLogoutBoxRLine onClick={logout} />
       </Header>
 
       <FinanceRecord>
-        {transactionsArray.length === 0 ? 
+        {transactionsArray.length === 0 ?
           <li>Não há registros de entrada ou saída</li>
           :
-          transactionsArray.map(transaction => <Registry>{transaction}</Registry>)
+          <>
+          {transactionsArray.map(transaction => <Registry>{transaction}</Registry>)}
+            <Balance>
+              <p1>SALDO</p1>
+              <p2>2849.96</p2>
+            </Balance>
+          </>
         }
-        
-        <Balance>
-          <p1>SALDO</p1>
-          <p2>2849.96</p2>
-        </Balance>
-        
+
+
+
       </FinanceRecord>
 
       <NewTransactions>
