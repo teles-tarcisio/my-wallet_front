@@ -18,7 +18,7 @@ width: 100%;
 height: 100%;
 margin: 0 9px;
 padding: 17px;
-overflow: scroll;
+overflow: auto;
 display: flex;
 flex-direction: column;
 align-items: center;
@@ -48,7 +48,7 @@ const Transaction = styled.li`
     color: #C6C6C6;
   }
   & h2 {
-    overflow-y: hidden;
+    overflow: scroll;
     margin: 0 auto;
     color: #000000;
   }
@@ -60,7 +60,7 @@ const Transaction = styled.li`
 
 const Balance = styled.div`
   width: 100%;
-  margin: auto 0 0 0;
+  margin: 15px 0 0 0;
   display: flex;
   font-size: 17px;
   line-height: 20px;

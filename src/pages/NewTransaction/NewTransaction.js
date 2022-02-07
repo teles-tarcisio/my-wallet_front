@@ -47,7 +47,7 @@ export default function NewTransaction({ user, type }) {
         <TransactionForm onSubmit={handleSubmit}>
           <Input required
             type='number'
-            min='0'
+            min='0.01'
             step='0.01'
             placeholder='Valor'
             name='amount'
