@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-
+import { Navigate } from 'react-router-dom';
 import { Bars } from 'react-loader-spinner';
 
 import { Container, Input, WideButton } from '../../components/SignUser/SignUser_styles';
 import { Header } from '../../components/Hello/Hello_styles';
 import { TransactionContainer, TransactionForm } from '../../components/NewTransaction/NewTransaction_styles.js';
+import { addNewTransaction } from '../../services/api';
 
 
-export default function NewTransaction({ type }) {
+export default function NewTransaction({ user, type }) {
   const [newTransaction, setNewTransaction] = useState({ amount: undefined, description: '' });
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = Navigate();
 
   function handleFormChange(ev) {
     setNewTransaction({ ...newTransaction, [ev.target.name]: ev.target.value });
@@ -18,21 +20,26 @@ export default function NewTransaction({ type }) {
   function handleSubmit(ev) {
     ev.preventDefault();
     setIsLoading(true);
-    const uploadTransaction = {
-      ...newTransaction,
-      type: `${type}`,
-      date: 'insert_date'
+    
+    const uploadTransaction = {...newTransaction, type: `${type}`};
+    const authConfig = {
+      headers: {
+        Authorization: `Bearer ${user.token}`
+      }
     };
-    console.log(uploadTransaction);
-    alert('agora a promise');
-    setIsLoading(false);
+     
+    const newTransactionPromise = addNewTransaction(uploadTransaction, authConfig);
+    newTransactionPromise.then(() => {
+      alert('Nova transação cadastrada com sucesso!');
+      setIsLoading(false);
+      navigate('/hello');
+    });
   }
-
-
-
+  
 
   return (
     <Container>
+      {console.log('props.user ->', user)}
       <Header>
         <h1>Nova {type === 'expense' ? 'saída' : 'entrada'}
         </h1>
@@ -41,6 +48,8 @@ export default function NewTransaction({ type }) {
         <TransactionForm onSubmit={handleSubmit}>
           <Input required
             type='number'
+            min='0'
+            step='0.01'
             placeholder='Valor'
             name='amount'
             value={newTransaction.amount}

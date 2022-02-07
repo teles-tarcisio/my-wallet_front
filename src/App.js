@@ -25,10 +25,10 @@ export default function App() {
           />
 
           <Route path='/new-expense'
-            element={<NewTransaction type={'expense'}/>}
+            element={<NewTransaction type={'expense'} user={signedUser}/>}
           />
           <Route path='/new-revenue'
-            element={<NewTransaction type={'revenue'}/>}
+            element={<NewTransaction type={'revenue'} user={signedUser}/>}
           />
 
 

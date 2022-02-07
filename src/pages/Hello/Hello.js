@@ -10,41 +10,8 @@ import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai';
 import { userAuthContext } from '../../contexts/userAuthContext.js';
 
 
-const hardcodedTransactions = [
-  {
-    date: "30/11",
-    description: "Almoço mãe",
-    amount: 39.90,
-    type: "expense"
-  },
-  {
-    date: "27/11",
-    description: "Mercado",
-    amount: 542.54,
-    type: "expense"
-  },
-  {
-    date: "26/11",
-    description: "Compras churrasco",
-    amount: 67.60,
-    type: "expense"
-  },
-  {
-    date: "20/11",
-    description: "Empréstimo Maria",
-    amount: 500.00,
-    type: "revenue"
-  },
-  {
-    date: "15/11",
-    description: "Salário",
-    amount: 3000.00,
-    type: "revenue"
-  },
-];
-
 export default function Hello() {
-  const [transactionsArray, setTransactionsArray] = useState(hardcodedTransactions);
+  const [transactionsArray, setTransactionsArray] = useState([]);
   const { signedUser, setSignedUser } = useContext(userAuthContext);
   const navigate = useNavigate();
 
@@ -57,14 +24,13 @@ export default function Hello() {
 
   function loadTransactions() {
     const transactionsPromise = getUserTransactions(signedUser.token);
-    console.log('array:\n', transactionsPromise);
+    transactionsPromise.then(response => setTransactionsArray(response.data));
   }
 
   useEffect(loadTransactions, []);
 
   return (
     <Container>
-      {console.log('context rerender:', signedUser)}
       <Header>
         <h1>Olá, {signedUser.name}</h1>
         < RiLogoutBoxRLine onClick={logout} />

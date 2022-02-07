@@ -18,8 +18,9 @@ export function getUserTransactions(token) {
   return transactionsPromise;
 }
 
-export function simulateAxios(value) {
-  return new Promise(resolve =>
-    setTimeout(() => resolve({...value, token: 'received-token'}), 2500)
-  );
+export function addNewTransaction(transactionData, authConfig) {
+  transactionData.amount = parseFloat(transactionData.amount);
+  
+  const transactionPromise = axios.post(SERVER_BASE_URL + '/transactions', transactionData, authConfig);
+  return transactionPromise;
 }
