@@ -8,7 +8,7 @@ export default function Registry({ children }) {
     <Transaction type={children.type}>
       <h1>{children.date}</h1>
       <h2>{children.description}</h2>
-      <h3>{children.amount}</h3>
+      <h3>{children.amount.toFixed(2)}</h3>
     </Transaction>
   );
 }

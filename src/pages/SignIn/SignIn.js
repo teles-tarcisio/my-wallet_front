@@ -16,8 +16,6 @@ export default function SignIn() {
 
   useEffect(() => {
     if (signedUser && signedUser.token) {
-      console.log('useEffect! -> context token? ', signedUser);
-      console.log('success! navigate');
       navigate('/hello');
     }
   }, []);
@@ -35,7 +33,6 @@ export default function SignIn() {
     loginPromise.then(response => {
       setIsLoading(false);
       setSignedUser(response.data);
-      console.log('response:', response.data);
       localStorage.setItem("auth", JSON.stringify(response.data));
       navigate('/hello');
     });

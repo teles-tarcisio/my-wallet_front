@@ -17,7 +17,6 @@ export default function Hello() {
 
   function logout() {
     localStorage.clear();
-    console.log('localStorage logout:', localStorage.getItem('authentication'));
     setSignedUser({});
     navigate('/');
   }

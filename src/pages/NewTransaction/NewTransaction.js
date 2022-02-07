@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Bars } from 'react-loader-spinner';
 
 import { Container, Input, WideButton } from '../../components/SignUser/SignUser_styles';
@@ -11,7 +11,7 @@ import { addNewTransaction } from '../../services/api';
 export default function NewTransaction({ user, type }) {
   const [newTransaction, setNewTransaction] = useState({ amount: undefined, description: '' });
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = Navigate();
+  const navigate = useNavigate();
 
   function handleFormChange(ev) {
     setNewTransaction({ ...newTransaction, [ev.target.name]: ev.target.value });
@@ -39,7 +39,6 @@ export default function NewTransaction({ user, type }) {
 
   return (
     <Container>
-      {console.log('props.user ->', user)}
       <Header>
         <h1>Nova {type === 'expense' ? 'saída' : 'entrada'}
         </h1>
