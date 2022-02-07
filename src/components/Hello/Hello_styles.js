@@ -48,6 +48,7 @@ const Transaction = styled.li`
     color: #C6C6C6;
   }
   & h2 {
+    overflow-y: hidden;
     margin: 0 auto;
     color: #000000;
   }
