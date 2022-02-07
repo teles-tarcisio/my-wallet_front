@@ -18,6 +18,7 @@ width: 100%;
 height: 100%;
 margin: 0 9px;
 padding: 17px;
+overflow: scroll;
 display: flex;
 flex-direction: column;
 align-items: center;
@@ -25,7 +26,7 @@ justify-content: center;
 background-color: #FFFFFF;
 border-radius: 5px;
 & li {
-    width: 180px;
+    width: 100%;
     text-align: center;
     font-size: 20px;
     line-height: 24px;
@@ -62,12 +63,12 @@ const Balance = styled.div`
   display: flex;
   font-size: 17px;
   line-height: 20px;
-  & p1 {
+  & h1 {
     margin: 0 auto 0 0;
     color: #000000;  
     font-weight: 700;
   }
-  & p2 {
+  & h2 {
     margin: 0 0 0 auto;
     color: #03AC00;
   }

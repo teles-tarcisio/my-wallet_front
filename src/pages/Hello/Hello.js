@@ -38,13 +38,13 @@ export default function Hello() {
 
       <FinanceRecord>
         {transactionsArray.length === 0 ?
-          <li>Não há registros de entrada ou saída</li>
+          <li key='000'>Não há registros de entrada ou saída</li>
           :
           <>
-            {transactionsArray.map(transaction => <Registry>{transaction}</Registry>)}
+            {transactionsArray.map((transaction, index) => <Registry key={index}>{transaction}</Registry>)}
             <Balance>
-              <p1>SALDO</p1>
-              <p2>2849.96</p2>
+              <h1>SALDO</h1>
+              <h2>2849.96</h2>
             </Balance>
           </>
         }
