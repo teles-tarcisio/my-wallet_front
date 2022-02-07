@@ -42,15 +42,15 @@ const Transaction = styled.li`
   gap: 0 12px;
   font-size: 16px;
   line-height: 19px;
-  & p1 {
+  & h1 {
     margin: 0 auto 0 0;
     color: #C6C6C6;
   }
-  & p2 {
+  & h2 {
     margin: 0 auto;
     color: #000000;
   }
-  & p3 {
+  & h3 {
     margin: 0 0 0 auto;
     color: ${props => props.type === 'expense' ? '#C70000' : '#03AC00'};
   }

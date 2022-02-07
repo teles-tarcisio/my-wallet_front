@@ -6,9 +6,9 @@ export default function Registry({ children }) {
 
   return (
     <Transaction type={children.type}>
-      <p1>{children.date}</p1>
-      <p2>{children.description}</p2>
-      <p3>{children.amount}</p3>
+      <h1>{children.date}</h1>
+      <h2>{children.description}</h2>
+      <h3>{children.amount}</h3>
     </Transaction>
   );
 }

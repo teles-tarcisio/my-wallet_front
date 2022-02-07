@@ -8,7 +8,7 @@ import { Container, StencilLogo, FormContainer, UserForm, Input, WideButton } fr
 
 
 export default function SignUp() {
-  const [formData, setFormData] = useState({ name: '', email: '', password: '', passwordConfirmation: ''});
+  const [formData, setFormData] = useState({ name: '', email: '', password: '', passwordConfirmation: '' });
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -76,9 +76,9 @@ export default function SignUp() {
           <WideButton type='submit' disabled={isLoading}>
             {
               isLoading ?
-              <Bars color="#FFFFFF" height={45} />
-              :
-              'Cadastrar'
+                <Bars color="#FFFFFF" height={45} />
+                :
+                'Cadastrar'
             }
           </WideButton>
           <Link to='/'>Já tem uma conta? Entre agora!</Link>

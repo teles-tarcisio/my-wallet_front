@@ -45,7 +45,6 @@ const hardcodedTransactions = [
 
 export default function Hello() {
   const [transactionsArray, setTransactionsArray] = useState(hardcodedTransactions);
-  const [transactionType, setTransaction] = useState('');
   const { signedUser, setSignedUser } = useContext(userAuthContext);
   const navigate = useNavigate();
 
@@ -61,12 +60,7 @@ export default function Hello() {
     console.log('array:\n', transactionsPromise);
   }
 
-  function newTransaction(type) {
-    navigate('/transaction');
-  }
-
   useEffect(loadTransactions, []);
-
 
   return (
     <Container>
