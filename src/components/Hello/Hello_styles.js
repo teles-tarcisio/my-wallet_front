@@ -17,8 +17,8 @@ const FinanceRecord = styled.ul`
 width: 100%;
 height: 100%;
 margin: 0 9px;
-padding: 17px;
-overflow: auto;
+padding: 117px 17px 17px 17px;
+overflow-y: scroll;
 display: flex;
 flex-direction: column;
 align-items: center;
