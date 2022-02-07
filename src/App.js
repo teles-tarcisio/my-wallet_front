@@ -21,7 +21,7 @@ export default function App() {
           />
 
           <Route path='/hello'
-            element={<Hello />}
+            element={<Hello/>}
           />
 
           <Route path='/new-expense'

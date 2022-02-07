@@ -14,6 +14,7 @@ export default function Hello() {
   const [transactionsArray, setTransactionsArray] = useState([]);
   const { signedUser, setSignedUser } = useContext(userAuthContext);
   const navigate = useNavigate();
+  const [balance, setBalance] = useState();
 
   function logout() {
     localStorage.clear();
@@ -23,10 +24,23 @@ export default function Hello() {
 
   function loadTransactions() {
     const transactionsPromise = getUserTransactions(signedUser.token);
-    transactionsPromise.then(response => setTransactionsArray(response.data));
+    transactionsPromise.then(response => {
+      setTransactionsArray(response.data);
+      calculateBalance()});
   }
 
   useEffect(loadTransactions, []);
+
+  function calculateBalance() {
+    const revenuesArray = transactionsArray.filter(entry => (
+      entry.type === 'revenue'));
+    const expensesArray = transactionsArray.filter((entry) => (
+        entry.type === 'expense'));
+    console.log(revenuesArray);
+    console.log(expensesArray);
+    
+    
+  }
 
   return (
     <Container>
@@ -43,7 +57,7 @@ export default function Hello() {
             {transactionsArray.map((transaction, index) => <Registry key={index}>{transaction}</Registry>)}
             <Balance>
               <h1>SALDO</h1>
-              <h2>2849.96</h2>
+              <h2>{balance}</h2>
             </Balance>
           </>
         }

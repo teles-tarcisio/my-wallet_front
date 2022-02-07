@@ -14,7 +14,12 @@ export function userSignIn(userData) {
 }
 
 export function getUserTransactions(token) {
-  const transactionsPromise = axios.get(SERVER_BASE_URL + '/transactions');
+  const authConfig = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
+  const transactionsPromise = axios.get(SERVER_BASE_URL + '/transactions', authConfig);
   return transactionsPromise;
 }
 
