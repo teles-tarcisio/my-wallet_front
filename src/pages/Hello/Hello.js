@@ -40,13 +40,16 @@ export default function Hello() {
     console.log(expensesArray);
     
     
+    
   }
+
+  
 
   return (
     <Container>
       <Header>
         <h1>Olá, {signedUser.name}</h1>
-        < RiLogoutBoxRLine onClick={logout} />
+        < RiLogoutBoxRLine onClick={logout} color='#C6C6C6'/>
       </Header>
 
       <FinanceRecord>
