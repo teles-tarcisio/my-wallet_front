@@ -31,7 +31,6 @@ export default function App() {
             element={<NewTransaction type={'revenue'} user={signedUser}/>}
           />
 
-
         </Routes>
       </userAuthContext.Provider>
     </BrowserRouter>

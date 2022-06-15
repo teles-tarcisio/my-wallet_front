@@ -72,7 +72,7 @@ const Balance = styled.div`
   }
   & h2 {
     margin: 0 0 0 auto;
-    color: #03AC00;
+    color: ${props => props.balanceColor === 'red' ? '#C70000' : '#03AC00'}
   }
 `;
 

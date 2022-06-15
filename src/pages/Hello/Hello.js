@@ -14,7 +14,7 @@ export default function Hello() {
   const [transactionsArray, setTransactionsArray] = useState([]);
   const { signedUser, setSignedUser } = useContext(userAuthContext);
   const navigate = useNavigate();
-  const [balance, setBalance] = useState();
+  const [balance, setBalance] = useState(0);
 
   function logout() {
     localStorage.clear();
@@ -26,30 +26,33 @@ export default function Hello() {
     const transactionsPromise = getUserTransactions(signedUser.token);
     transactionsPromise.then(response => {
       setTransactionsArray(response.data);
-      calculateBalance()});
+      calculateBalance()
+    });
   }
 
-  useEffect(loadTransactions, []);
+  useEffect(loadTransactions, [balance]);
 
   function calculateBalance() {
-    const revenuesArray = transactionsArray.filter(entry => (
-      entry.type === 'revenue'));
-    const expensesArray = transactionsArray.filter((entry) => (
-        entry.type === 'expense'));
-    console.log(revenuesArray);
-    console.log(expensesArray);
-    
-    
-    
-  }
+    const revenuesArray = transactionsArray
+      .filter((entry) => (
+        entry.type === 'revenue'))
+      .map((entry) => (entry.amount));
+    const expensesArray = transactionsArray
+      .filter((entry) => (
+        entry.type === 'expense'))
+      .map((entry) => (entry.amount));
 
-  
+    let totalIncome = revenuesArray.reduce((x, y) => x + y, 0);
+    let totalOutcome = expensesArray.reduce((x, y) => x + y, 0);
+
+    setBalance((totalIncome - totalOutcome).toFixed(2));
+  }
 
   return (
     <Container>
       <Header>
         <h1>Olá, {signedUser.name}</h1>
-        < RiLogoutBoxRLine onClick={logout} color='#C6C6C6'/>
+        < RiLogoutBoxRLine onClick={logout} color='#C6C6C6' />
       </Header>
 
       <FinanceRecord>
@@ -58,10 +61,17 @@ export default function Hello() {
           :
           <>
             {transactionsArray.map((transaction, index) => <Registry key={index}>{transaction}</Registry>)}
-            <Balance>
-              <h1>SALDO</h1>
-              <h2>{balance}</h2>
-            </Balance>
+            {balance >= 0 ?
+              <Balance balanceColor='green'>
+                <h1>SALDO</h1>
+                <h2>{balance}</h2>
+              </Balance>
+              :
+              <Balance balanceColor='red'>
+                <h1>SALDO</h1>
+                <h2>{balance}</h2>
+              </Balance>
+            }
           </>
         }
       </FinanceRecord>
